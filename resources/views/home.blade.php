@@ -1,0 +1,12 @@
+@extends('index')
+<h1>YOOOO</h1>
+<h1>YOOOO</h1>
+@section('content')
+<h1>YOOOO</h1>
+<h1>YOOOO</h1>
+<h1>YOOOO</h1>
+@include('projects.list')
+<h1>YOOOO</h1>
+<h1>YOOOO</h1>
+<h1>YOOOO</h1>
+@endsection

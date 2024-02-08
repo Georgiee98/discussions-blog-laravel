@@ -1,0 +1,126 @@
+/* fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.p1 {
+    /* Applying the animation to p1 elements */
+    animation: fadeIn 2s ease-in-out;
+}
+
+body {
+    font-family: "figtree", sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+@media only screen and (max-width: 720px) {
+    nav {
+        flex-direction: column;
+    }
+}
+
+nav {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-align: center;
+}
+.nav-logo {
+    display: flex;
+    position: relative;
+    p {
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        color: red;
+    }
+}
+.nav-logo button {
+    // position: absolute;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    position: relative;
+}
+
+.nav-links-p {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s; /* Add a smooth transition for the color change */
+}
+
+.nav-links-p:hover {
+    color: #ffcc00; /* Change the text color on hover */
+    text-decoration: underline; /* Add underline on hover (you can customize this) */
+}
+
+.nav-links-dropdown {
+    display: none; /* Hide the dropdown by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+    z-index: 1; /* Ensure the dropdown is on top of other elements */
+}
+
+.nav-links:hover .nav-links-dropdown {
+    display: block; /* Show the dropdown when hovering over the parent */
+}
+
+.nav-links-dropdown p {
+    color: #fff;
+    margin: 0;
+    padding: 5px 0;
+}
+.smpt-email {
+    display: flex;
+    gap: 10px;
+}
+
+.smpt-email input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.smpt-email input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

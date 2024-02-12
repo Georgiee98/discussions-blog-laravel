@@ -1,51 +1,49 @@
 @extends('index')
+
 @section('content')
 <div class="container">
-    <h2 class="mt-5 mb-4">Projects</h2>
-    @if (Auth::check() && Auth::user()->is_admin)
-    <a href="{{ route('projects.create') }}" class="btn btn-success mb-3">Create Project</a>
-    @endif
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        @foreach ($projects as $project)
-        <div class="col">
-            <div class="card h-100">
-                <img src="{{ $project->image_url }}" class="card-img-top" alt="Project Image">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $project->title }}</h5>
-                    <p class="card-subtitle mb-2 text-muted">{{ $project->subtitle }}</p>
-                    <p class="card-text">{{ $project->description }}</p>
-                </div>
-                <div class="card-footer d-flex justify-content-between align-items-center">
-                    <a href="{{ $project->url }}" class="btn btn-primary">View</a>
-                    @if (Auth::check() && Auth::user()->is_admin)
-                    <!-- User is authenticated -->
-                    <div class="btn-group" role="group">
-                        <p>Welcome, {{ Auth::user()->name }}</p>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-danger">Edit</a>
-                        @if (Auth::check() && Auth::user()->is_admin)
-                        <!-- DELETE START -->
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
-                            onsubmit="return confirm('Are you sure?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-warning">Delete</button>
-                        </form>
-                        <!-- @endif -->
-                        <!-- DELETE END -->
-                        <!-- <button class="btn btn-danger">Edit</button> -->
-                        <!-- <button class="btn btn-warning">Delete</button> -->
-                    </div>
-                    @else
-                    <!-- User is not authenticated -->
-                    <p>only Admin users can Edit or delete a project</p>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Projects</div>
 
+                <div class="card-body">
+                    @if(Auth::check())
+                    @if(Auth::user()->is_admin)
+                    <div class="mb-3">
+                        <a href="{{ route('projects.create') }}" class="btn btn-primary">Create Project</a>
+                    </div>
                     @endif
+                    @endif
+
+                    <div class="row">
+                        @foreach($projects as $project)
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <img src="{{ $project->image_url }}" class="card-img-top" alt="{{ $project->title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $project->title }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ $project->subtitle }}</h6>
+                                    <p class="card-text">{{ $project->description }}</p>
+                                    @if(Auth::check() && Auth::user()->is_admin)
+                                    <a href="{{ route('projects.edit', $project->id) }}"
+                                        class="btn btn-primary btn-sm">Edit</a>
+                                    <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
+                                        class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
+                                    </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
-
         </div>
-        @endforeach
     </div>
-
 </div>
 @endsection

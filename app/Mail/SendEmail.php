@@ -7,31 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendEmail extends Mailable implements ShouldQueue
+class SendEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    // Assuming you might want to pass dynamic data to the email
-    public $data;
-
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
-    public function __construct($data = null)
+    public function __construct()
     {
-        $this->data = $data;
+        // Initialization code here if needed
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
-        return $this->view('emails.send')
-            ->subject('Send Email');
+        return $this->from('kikamarinkovska@zohomail.eu') // Set the sender address
+            ->subject('Test Email from Laravel') // Set the email subject
+            ->view('emails.send'); // Set the email content using a view
     }
 }

@@ -21,15 +21,27 @@
 
         <div class="nav-logo">
             <button class="nav-img">LOGO</button>
-            <!-- <p class="p1">NAME</p> -->
-            <form action="{{ route('submitContactForm') }}" method="POST">
+            <!-- SENT EMAIL START -->
+            <!-- SENT EMAIL START -->
+            <form action="{{ route('sendEmail') }}" method="POST">
                 @csrf
                 <div>
                     <h2>Contact Us</h2>
-                    <input type="email" name="email" required>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" placeholder="Your email" required>
+
+                    <label for="subject">Subject:</label>
+                    <input type="text" name="subject" id="subject" placeholder="Email subject" required>
+
+                    <label for="message">Message:</label>
+                    <textarea name="message" id="message" placeholder="Your message" required></textarea>
+
                     <button type="submit">Submit</button>
                 </div>
             </form>
+            <!-- SENT EMAIL END -->
+
+            <!-- SENT EMAIL FINISH -->
         </div>
         <div class="nav-links p-1">
             <p class="nav-links-p p-1">Links (Dropdown)</p>

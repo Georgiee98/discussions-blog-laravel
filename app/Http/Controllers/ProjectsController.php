@@ -5,104 +5,94 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Projects;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Route;
+
 
 class ProjectsController extends Controller
 {
+    // Constructor to apply middleware to specific methods
     public function __construct()
     {
+        // Apply 'auth' middleware to ensure users are authenticated for these methods
         $this->middleware('auth')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        // Apply 'admin' middleware to ensure only admin users can access these methods
         $this->middleware('admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
     }
 
+    // Method to display all projects
     public function index()
     {
+        // Retrieve all projects from the database
         $projects = Projects::all();
+        // Return the view with the projects data
         return view('projects.list', compact('projects'));
     }
 
+    // Method to display the project creation form
     public function create()
     {
-        // Allow only authenticated users to create projects
+        // Return the view for creating a new project
         return view('projects.create');
     }
 
+    // Method to store a newly created project in the database
     public function store(Request $request)
     {
-        // Validate project data
-        $request->validate([
+        // Validate the incoming request data
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'required|string',
             'description' => 'required|string',
-            'url' => 'string',
-            'image_url' => 'required|string',
-            // Add other fields as necessary
+            'url' => 'nullable|url',
+            'image_url' => 'required|url',
         ]);
 
-        Projects::create([
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'description' => $request->description,
-            'url' => $request->url,
-            'image_url' => $request->image_url,
-            // Add other fields as necessary
-        ]);
+        // Create a new project record with the validated data
+        Projects::create($validatedData);
 
+        // Redirect the user to the home page with a success message
         return redirect()->route('home')->with('success', 'Project created successfully.');
-
     }
 
+    // Method to display the project edit form
     public function edit($id)
     {
-        // Fetch the project by its ID
+        // Find the project by its ID
         $project = Projects::findOrFail($id);
-
-        // Check if the logged-in user is authorized to edit this project
-        if (!Auth::user()->is_admin) {
-            return redirect()->route('projects.index')->with('error', 'You are not authorized to edit this project.');
-        }
-
-        // Pass the project to the edit view
+        // Return the view for editing the project with the project data
         return view('projects.edit', compact('project'));
     }
 
+    // Method to update the specified project in the database
     public function update(Request $request, $id)
     {
-
-
-        \Log::debug($request->all());
-        $project = Projects::findOrFail($id);
-
-        \Log::debug('Updated project:', $project->toArray());
-
-        // Validate project data
-        $validated = $request->validate([
+        // Validate the incoming request data
+        $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'string|nullable',
             'description' => 'required|string',
-            'url' => 'string|nullable',
-            'image_url' => 'required|string|nullable',
+            'url' => 'nullable|url',
+            'image_url' => 'required|url',
         ]);
 
-        // Directly use update method with validated data
-        $project->update($validated);
+        // Find the project by its ID
+        $project = Projects::findOrFail($id);
+        // Update the project record with the validated data
+        $project->update($validatedData);
 
+        // Redirect the user to the home page with a success message
         return redirect()->route('home')->with('success', 'Project updated successfully.');
-
     }
 
+    // Method to delete the specified project from the database
     public function destroy($id)
     {
-        $projects = Projects::findOrFail($id);
+        // Find the project by its ID
+        $project = Projects::findOrFail($id);
+        // Delete the project record
+        $project->delete();
 
-        // Check if the logged-in user is authorized to delete this project
-        if (!Auth::user()->is_admin) {
-            return redirect()->route('home')->with('error', 'You are not authorized to delete this project.');
-        }
-
-        // Delete project
-        $projects->delete();
-
+        // Redirect the user to the home page with a success message
         return redirect()->route('home')->with('success', 'Project deleted successfully.');
     }
 }

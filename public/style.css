@@ -45,7 +45,7 @@ nav {
     }
 }
 .nav-logo button {
-    position: absolute;
+    // position: absolute;
     background-color: #fff;
     color: #333;
     border: none;

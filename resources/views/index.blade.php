@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Laravel</title>
-    @vite(['resources/css/index/nav-bar.css'])
+    <link rel="stylesheet" href="style.css">
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -21,27 +21,7 @@
 
         <div class="nav-logo">
             <button class="nav-img">LOGO</button>
-            <!-- SENT EMAIL START -->
-            <!-- SENT EMAIL START -->
-            <form action="{{ route('sendEmail') }}" method="POST">
-                @csrf
-                <div>
-                    <h2>Contact Us</h2>
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="Your email" required>
 
-                    <label for="subject">Subject:</label>
-                    <input type="text" name="subject" id="subject" placeholder="Email subject" required>
-
-                    <label for="message">Message:</label>
-                    <textarea name="message" id="message" placeholder="Your message" required></textarea>
-
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-            <!-- SENT EMAIL END -->
-
-            <!-- SENT EMAIL FINISH -->
         </div>
         <div class="nav-links p-1">
             <p class="nav-links-p p-1">Links (Dropdown)</p>
@@ -71,9 +51,13 @@
             <input type="text" name="smpt_email_text" id="">
             <input type="submit" value="submit">
         </form> -->
+
     </nav>
+    @include('emails.contact')
+
     <!-- Navbar -->
     @yield('content')
+
 
 
 

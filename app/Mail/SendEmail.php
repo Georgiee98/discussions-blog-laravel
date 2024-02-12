@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
@@ -11,15 +10,22 @@ class SendEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct()
+    public $email;
+    public $content; // Message or any data i want to include
+
+    public function __construct($email, $content = null)
     {
-        // Initialization code here if needed
+        $this->email = $email;
+        $this->content = $content;
     }
 
     public function build()
     {
-        return $this->from('kikamarinkovska@zohomail.eu') // Set the sender address
-            ->subject('Test Email from Laravel') // Set the email subject
-            ->view('emails.send'); // Set the email content using a view
+        return $this->from('kikamarinkovska@zohomail.eu')
+            ->subject('Thank you for contacting us!')
+            ->view('emails.send')
+            ->with([
+                'content' => $this->content,
+            ]);
     }
 }

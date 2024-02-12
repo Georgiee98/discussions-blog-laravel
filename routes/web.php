@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\UserController;
 use App\Models\Projects;
+use App\Http\Controllers\ContactViaEmailController;
 
 Route::get('/email', function () {
     $to = 'delevdzoce@gmail.com';
@@ -12,6 +13,12 @@ Route::get('/email', function () {
 
     return 'Email sent successfully!';
 });
+
+// Display the contact form
+Route::get('/contact', [ContactViaEmailController::class, 'showContactForm'])->name('contact');
+
+// Handle the form submission
+Route::post('/contact', [ContactViaEmailController::class, 'contact'])->name('contact.submit');
 
 // Route for the home page
 Route::get('/', function () {
@@ -23,10 +30,6 @@ Route::get('/emails', function () {
     return view('emails.email'); // Return the email list view
 });
 
-// POST route for email form submission
-Route::post('/', [UserController::class, 'sendEmail'])->name('sendEmail');
-
-// Authentication routes
 
 // Route to display the login form
 Route::get('/login', [UserController::class, 'loginForm'])->name('login');
